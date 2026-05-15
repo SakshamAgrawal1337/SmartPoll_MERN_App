@@ -230,5 +230,5 @@ Environment variables must be configured in both client and server deployments:
 
 ## License
 
-MIT . 
+MIT  
 
