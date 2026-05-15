@@ -14,8 +14,8 @@ const server = http.createServer(app);
 // socket init
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    origin: "https://smart-poll-mern-app.vercel.app",
+     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
      credentials: true,
   }
 });
