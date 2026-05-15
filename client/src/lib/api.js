@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || "http://localhost:5000";
+const BASE = import.meta.env.VITE_API_URL ;
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL ;
 export { SOCKET_URL };
 
 const api = axios.create({
