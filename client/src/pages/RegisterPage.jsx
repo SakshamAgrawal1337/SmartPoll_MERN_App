@@ -16,7 +16,10 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (form.password.length < 6) { toast.error("Password must be at least 6 characters"); return; }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (form.password.length < 8) { toast.error("Password must be at least 8 characters long"); return; }
+    if (!passwordRegex.test(form.password)) { toast.error("Password must include uppercase, lowercase, and a number" ); return;}
+
     setLoading(true);
     try {
       // POST /auth/register → { success, data: { name, email, ... } } ← NO token returned
@@ -55,7 +58,7 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-body mb-1.5" style={{ color: "var(--tx-2)" }}>Full name</label>
-              <input type="text" value={form.name} onChange={set("name")} placeholder="Saksham Sharma" required className="input-field" />
+              <input type="text" value={form.name} onChange={set("name")} placeholder="e.g. Saksham Agrawal" required className="input-field" />
             </div>
             <div>
               <label className="block text-sm font-body mb-1.5" style={{ color: "var(--tx-2)" }}>Email</label>
@@ -68,9 +71,9 @@ export default function RegisterPage() {
                   type={showPwd ? "text" : "password"}
                   value={form.password}
                   onChange={set("password")}
-                  placeholder="Min. 6 characters"
+                  placeholder="Min. 8 characters"
                   required
-                  minLength={6}
+                  minLength={8}
                   className="input-field pr-12"
                 />
                 <button
@@ -92,12 +95,12 @@ export default function RegisterPage() {
                     className="prog-fill"
                     style={{
                       width: `${Math.min(100, (form.password.length / 12) * 100)}%`,
-                      background: form.password.length < 6 ? "var(--danger)" : form.password.length < 10 ? "#F59E0B" : "var(--success)",
+                      background: form.password.length < 8 ? "var(--danger)" : form.password.length < 12 ? "#F59E0B" : "var(--success)",
                     }}
                   />
                 </div>
                 <p className="text-xs font-mono mt-1" style={{ color: "var(--tx-muted)" }}>
-                  {form.password.length < 6 ? "Too short" : form.password.length < 10 ? "Good" : "Strong"}
+                  {form.password.length < 8 ? "Too short" : form.password.length < 12 ? "Good" : "Strong"}
                 </p>
               </div>
             )}
