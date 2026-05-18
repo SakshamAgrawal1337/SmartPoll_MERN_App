@@ -122,8 +122,19 @@ export default function AnalyticsPage() {
             {[
               { label: "Total Votes", value: total },
               { label: "Questions", value: Object.keys(qStats).length },
-              { label: "Status", value: total > 0 ? "Active" : "No votes" },
+              {
+                label: "Status",
+                value:
+                  analytics?.status === "active"
+                    ? "Active"
+                    : analytics?.status
+                      ? analytics.status
+                      : total > 0
+                        ? "Active"
+                        : "No votes",
+              },
             ].map((s) => (
+
               <div key={s.label} className="card glass text-center p-4">
                 <div className="font-display font-bold text-2xl" style={{ color: "var(--tx)" }}>{s.value}</div>
                 <div className="font-mono text-xs mt-0.5" style={{ color: "var(--tx-muted)" }}>{s.label}</div>

@@ -166,10 +166,11 @@ export default function DashboardPage() {
 
         {/* Content */}
         {loading ? (
-          <div className="flex justify-center py-24">
+          <div className="min-h-[60vh]">
             <PageSkeleton variant="dashboard" />
           </div>
         ) : polls.length === 0 ? (
+
           <EmptyState
             icon=<Vote size={90} />
             title="No polls yet"

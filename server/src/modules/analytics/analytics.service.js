@@ -87,14 +87,18 @@ export const getPollAnalyticsService = async (pollId) => {
   // Compute votes
   for (const response of responses) {
     for (const ans of response.answers) {
-      const q = questionStats[ans.questionId];
+      // IDs can be stored as ObjectId vs String depending on population.
+      // Normalize to string keys to ensure we always hit the right question.
+      const q = questionStats[String(ans.questionId)];
 
       if (!q) continue;
 
       // selectedOption may come from either payload shape.
       const selected =
         ans.selectedOptions?.[0] ??
-        (Array.isArray(ans.selectedOptions) ? ans.selectedOptions[0] : undefined) ??
+        (Array.isArray(ans.selectedOptions)
+          ? ans.selectedOptions[0]
+          : undefined) ??
         ans.selectedOption;
 
       if (!selected) continue;
@@ -107,8 +111,11 @@ export const getPollAnalyticsService = async (pollId) => {
     }
   }
 
+
   return {
     pollId,
+    status: poll.status,
+    expiresAt: poll.expiresAt,
     totalResponses,
     questionStats,
   };

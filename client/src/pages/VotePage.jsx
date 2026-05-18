@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { pollAPI, responseAPI } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
-import { PageSkeleton } from "../components/ui/index";
+import { PageSkeleton, Spinner } from "../components/ui/index";
+
 import toast from "react-hot-toast";
 import DotsBackground from "../components/ui/DotsBackground.jsx";
 import { SearchAlert } from 'lucide-react';
@@ -22,7 +23,8 @@ export default function VotePage() {
   const [submitted, setSubmitted]   = useState(false);
   const [answeredLive, setAnsweredLive] = useState(0);
 
-  // Note: full-page skeleton used only for `loading` state above (no full-page Spinner).
+  // Note: full-page skeleton used only for `loading` state above.
+
 
   useEffect(() => {
     pollAPI.getByCode(code)
