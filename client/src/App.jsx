@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { useLenis } from "./lib/lenis";
-import { PageLoader } from "./components/ui/index";
+import { PageLoader, PageSkeleton } from "./components/ui/index";
 import Navbar from "./components/layout/Navbar";
 
 import LandingPage    from "./pages/LandingPage";
@@ -15,7 +15,7 @@ import EditPollPage from "./pages/EditPollPage";
 
 const Protected = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return <PageLoader />;
+  if (loading) return <PageSkeleton />;
   if (!user)   return <Navigate to="/login" replace />;
   return children;
 };
@@ -23,7 +23,7 @@ const Protected = ({ children }) => {
 export default function App() {
   useLenis();
   const { loading } = useAuth();
-  if (loading) return <PageLoader />;
+  if (loading) return <PageSkeleton />;
 
   return (
     <>

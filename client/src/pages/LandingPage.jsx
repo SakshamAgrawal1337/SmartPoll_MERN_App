@@ -170,15 +170,15 @@ export default function LandingPage() {
               style={{ boxShadow: "0 0 0 1px var(--accent-ring), 0 24px 64px rgba(0,0,0,0.2)" }}
             >
               <p className="font-body text-sm text-left mb-3" style={{ color: "var(--tx-2)" }}>
-                Have a poll code? Jump right in ↓
+                Have a poll code? Jump right in →
               </p>
               <form onSubmit={handleJoin} className="flex gap-3">
                 <input
                   value={code}
                   onChange={(e) => setCode(e.target.value.toUpperCase())}
-                  placeholder="e.g. 967629"
+                  placeholder="967629"
                   maxLength={10}
-                  className="input-field font-mono text-center tracking-[0.3em] uppercase text-base"
+                  className="input-field font-inter text-center tracking-[1.5rem] uppercase text-base"
                 />
                 <button type="submit" disabled={loading} className="btn-primary px-6 shrink-0">
                   {loading ? <Spinner size="sm" /> : <><span>Join</span> <ArrowRight size={15} /></>}
@@ -198,7 +198,7 @@ export default function LandingPage() {
                     Start for free <ArrowRight size={16} />
                   </Link>
                   <Link to="/login" className="btn-ghost py-3 px-8 text-base">
-                    Log in
+                    Sign in
                   </Link>
                 </>
               )}
@@ -382,7 +382,7 @@ export default function LandingPage() {
             <nav className="flex flex-wrap items-center gap-1">
               {[
                 { label: "Home", to: "/" },
-                { label: "Login", to: "/login" },
+                { label: "Sign in", to: "/login" },
                 { label: "Register", to: "/register" },
                 ...(user
                   ? [{ label: "Dashboard", to: "/dashboard" }, { label: "Create Poll", to: "/create" }]

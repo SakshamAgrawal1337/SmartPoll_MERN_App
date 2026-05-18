@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { pollAPI, responseAPI } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
-import { Spinner } from "../components/ui/index";
+import { PageSkeleton } from "../components/ui/index";
 import toast from "react-hot-toast";
 import DotsBackground from "../components/ui/DotsBackground.jsx";
 import { SearchAlert } from 'lucide-react';
@@ -21,6 +21,8 @@ export default function VotePage() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted]   = useState(false);
   const [answeredLive, setAnsweredLive] = useState(0);
+
+  // Note: full-page skeleton used only for `loading` state above (no full-page Spinner).
 
   useEffect(() => {
     pollAPI.getByCode(code)
@@ -99,11 +101,7 @@ export default function VotePage() {
   };
 
   // ── States ──────────────────────────────────────────────────────
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
-      <Spinner size="lg" />
-    </div>
-  );
+  if (loading) return <PageSkeleton variant="vote" />;
 
   if (error) return (
       <div className="min-h-screen flex items-center justify-center px-4" >

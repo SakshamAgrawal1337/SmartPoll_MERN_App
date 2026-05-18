@@ -13,7 +13,101 @@ export const Spinner = ({ size = "md" }) => {
   );
 };
 
-// ── Page loader ────────────────────────────────────────────────────
+// ── Skeletons ──────────────────────────────────────────────────────
+const SkeletonBase = ({ className = "", style = {} }) => (
+  <div
+    className={`bg-[rgba(255,255,255,0.06)] ${className}`}
+    style={{
+      border: "1px solid var(--border)",
+      borderRadius: 12,
+      ...style,
+    }}
+  />
+);
+
+export const SkeletonLine = ({ w = "100%", h = 12, className = "" }) => (
+  <div
+    className={`h-[${h}px] bg-[rgba(255,255,255,0.06)] animate-pulse ${className}`}
+    style={{ width: w, borderRadius: 999, border: "1px solid var(--border)" }}
+  />
+);
+
+export const PageSkeleton = ({ variant = "default" }) => {
+  const isVote = variant === "vote";
+  const isAnalytics = variant === "analytics";
+  const isDashboard = variant === "dashboard";
+
+  return (
+    <div className="min-h-screen" style={{ background: "var(--bg)" }}>
+      <div className="max-w-5xl mx-auto px-4 pt-24 pb-16">
+        {isDashboard && (
+          <div className="space-y-6">
+            <div className="flex items-start justify-between gap-4">
+              <div className="space-y-3 flex-1">
+                <SkeletonBase className="w-52 h-10" style={{ borderRadius: 14 }} />
+                <SkeletonBase className="w-44 h-6" style={{ borderRadius: 10 }} />
+              </div>
+              <SkeletonBase className="w-32 h-10" style={{ borderRadius: 14 }} />
+            </div>
+            <div className="grid grid-cols-3 gap-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <SkeletonBase key={i} className="h-28" style={{ borderRadius: 16 }} />
+              ))}
+            </div>
+            <div className="space-y-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <SkeletonBase key={i} className="h-44" style={{ borderRadius: 18 }} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {isAnalytics && (
+          <div className="space-y-6">
+            <SkeletonBase className="w-64 h-10" style={{ borderRadius: 14 }} />
+            <div className="grid grid-cols-3 gap-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <SkeletonBase key={i} className="h-24" style={{ borderRadius: 16 }} />
+              ))}
+            </div>
+            <div className="space-y-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <SkeletonBase key={i} className="h-72" style={{ borderRadius: 18 }} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {isVote && (
+          <div className="space-y-6">
+            <SkeletonBase className="w-32 h-8" style={{ borderRadius: 999 }} />
+            <SkeletonBase className="w-80 h-10" style={{ borderRadius: 14 }} />
+            <SkeletonBase className="w-full h-4" style={{ borderRadius: 999 }} />
+            <div className="space-y-4">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="space-y-3">
+                  <SkeletonBase className="w-full h-14" style={{ borderRadius: 18 }} />
+                  <SkeletonBase className="w-full h-56" style={{ borderRadius: 18 }} />
+                </div>
+              ))}
+            </div>
+            <SkeletonBase className="w-full h-12" style={{ borderRadius: 16 }} />
+          </div>
+        )}
+
+        {!isVote && !isAnalytics && !isDashboard && (
+          <div className="space-y-6">
+            <SkeletonBase className="w-64 h-10" style={{ borderRadius: 14 }} />
+            <SkeletonBase className="w-full h-14" style={{ borderRadius: 18 }} />
+            <SkeletonBase className="w-full h-96" style={{ borderRadius: 18 }} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ── Page loader (fallback) ─────────────────────────────────────────
 export const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
     <div className="flex flex-col items-center gap-4">

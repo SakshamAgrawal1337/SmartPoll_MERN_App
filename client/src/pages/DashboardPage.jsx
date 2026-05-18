@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { pollAPI } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
-import { Spinner, EmptyState, ConfirmModal } from "../components/ui/index";
+import { PageSkeleton, EmptyState, ConfirmModal } from "../components/ui/index";
 import toast from "react-hot-toast";
 import DotsBackground from "../components/ui/DotsBackground";
 import { Vote, ClipboardCopy, BadgeX, EllipsisVertical } from "lucide-react";
@@ -166,7 +166,9 @@ export default function DashboardPage() {
 
         {/* Content */}
         {loading ? (
-          <div className="flex justify-center py-24"><Spinner size="lg" /></div>
+          <div className="flex justify-center py-24">
+            <PageSkeleton variant="dashboard" />
+          </div>
         ) : polls.length === 0 ? (
           <EmptyState
             icon=<Vote size={90} />

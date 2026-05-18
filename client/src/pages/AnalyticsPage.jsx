@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { pollAPI, analyticsAPI } from "../lib/api";
 import { joinPollRoom, leaveSocket } from "../lib/socket.js";
-import { Spinner } from "../components/ui/index";
+import { PageSkeleton } from "../components/ui/index";
 import toast from "react-hot-toast";
 import DotsBackground from "../components/ui/DotsBackground";
 import {ChartBarStacked} from "lucide-react";
@@ -75,11 +75,7 @@ export default function AnalyticsPage() {
   // Fix in analytics.service.js: check answer.selectedOptions?.[0] || answer.selectedOption
   // ─────────────────────────────────────────────────────────────
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--bg)" }}>
-      <Spinner size="lg" />
-    </div>
-  );
+  if (loading) return <PageSkeleton variant="analytics" />;
 
   const total = liveCount ?? analytics?.totalResponses ?? 0;
   const qStats = analytics?.questionStats ?? {};
