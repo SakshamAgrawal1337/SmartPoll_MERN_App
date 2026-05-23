@@ -114,7 +114,7 @@ export default function VotePage() {
           <h2 className="font-display font-bold text-xl mb-2" style={{ color: "var(--tx)" }}>Poll Unavailable</h2>
           <p className="font-body text-sm" style={{ color: "var(--tx-muted)" }}>{error}</p>
 
-<button
+{/* <button
   onClick={async () => {
     try {
       console.log("Fetching poll:", code);
@@ -139,7 +139,7 @@ export default function VotePage() {
   className="btn-primary w-full mt-4"
 >
   View Analytics →
-</button>
+</button> */}
         </div>
       </div>
   );
