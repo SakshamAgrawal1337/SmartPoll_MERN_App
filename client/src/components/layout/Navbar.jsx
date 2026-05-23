@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { ThemeToggle } from "../ui/index";
@@ -12,6 +12,17 @@ export default function Navbar() {
   // Mobile: hide desktop links behind a simple drawer
   const [open, setOpen] = useState(false);
 
+  const [scrolled, setScrolled] = useState(false);
+
+useEffect(() => {
+  const onScroll = () => {
+    setScrolled(window.scrollY > 20);
+  };
+
+  window.addEventListener("scroll", onScroll);
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
+
 
   const isActive = (p) => loc.pathname === p;
 
@@ -21,16 +32,27 @@ export default function Navbar() {
     nav("/login");
   };
 
+  
+
   return (
-    <header
-      className="fixed top-0 left-0 right-0 z-50 border-b"
-      style={{
-        background: "var(--nav)",
-        backdropFilter: "blur(20px)",
-        WebkitBackdropFilter: "blur(20px)",
-        borderColor: "var(--border)",
-      }}
-    >
+      <header
+        className="fixed z-50 transition-all duration-500 ease-out border"
+        style={{
+          top: scrolled ? 12 : 0,
+          left: scrolled ? "50%" : 0,
+          right: scrolled ? "auto" : 0,
+          transform: scrolled ? "translateX(-50%)" : "translateX(0)",
+          width: scrolled ? "min(92%, 1100px)" : "100%",
+          borderRadius: scrolled ? "999px" : "0px",
+          background: "var(--nav)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderColor: "var(--border)",
+          boxShadow: scrolled
+            ? "0 8px 30px rgba(0,0,0,0.12)"
+            : "0 0 0 rgba(0,0,0,0)",
+        }}
+      >
       <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2.5 group">
@@ -138,7 +160,7 @@ export default function Navbar() {
             <>
               <ThemeToggle />
               <Link to="/login" className="btn-ghost py-2 px-4 text-sm">Login</Link>
-              <Link to="/register" className="btn-primary py-2 px-4 text-sm">Get Started</Link>
+              <Link to="/register" className="btn-primary py-2 px-2.5 sm:px-4 text-[11px] sm:text-sm whitespace-nowrap">  Get Started</Link>
             </>
           )}
         </div>
