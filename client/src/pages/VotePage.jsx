@@ -114,26 +114,32 @@ export default function VotePage() {
           <h2 className="font-display font-bold text-xl mb-2" style={{ color: "var(--tx)" }}>Poll Unavailable</h2>
           <p className="font-body text-sm" style={{ color: "var(--tx-muted)" }}>{error}</p>
 
-          <button
-            onClick={async () => {
-              // Best-effort: fetch poll by code so we can get Mongo _id for analytics.
-              try {
-                const r = await pollAPI.getByCode(code);
-                const p = r.data.data;
-                if (p?._id) {
-                  // Analytics route expects: /analytics/:pollId (uses poll _id)
-                  nav(`/analytics/${p._id}`);
-                  return;
-                }
-              } catch (_) {
-                // ignore
-              }
-              toast.error("Analysis unavailable for this poll");
-            }}
-            className="btn-primary w-full mt-4"
-          >
-            View Analytics →
-          </button>
+<button
+  onClick={async () => {
+    try {
+      console.log("Fetching poll:", code);
+
+      const { data } = await pollAPI.getByCode(code);
+
+      console.log("API response:", data);
+
+      if (data?.success && data?.data?._id) {
+        nav(`/analytics/${data.data._id}`);
+      } else {
+        toast.error("Poll not found");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(
+        err?.response?.data?.message ||
+        "Analysis unavailable for this poll"
+      );
+    }
+  }}
+  className="btn-primary w-full mt-4"
+>
+  View Analytics →
+</button>
         </div>
       </div>
   );
