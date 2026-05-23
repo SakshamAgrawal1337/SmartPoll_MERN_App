@@ -108,33 +108,34 @@ export default function VotePage() {
   if (error) return (
       <div className="min-h-screen flex items-center justify-center px-4" >
         <DotsBackground />
-      <div className="card glass mb-4 text-center py-16 animate-fade-up d2 items-center flex flex-col items-center justify-center p-10 max-w-sm">
-        <div className="text-4xl mb-4"><SearchAlert size={110} strokeWidth={1.25} /></div>
-        <h2 className="font-display font-bold text-xl mb-2" style={{ color: "var(--tx)" }}>Poll Unavailable</h2>
-        <p className="font-body text-sm" style={{ color: "var(--tx-muted)" }}>{error}</p>
+        <div className="card glass mb-4 text-center py-16 animate-fade-up d2 items-center flex flex-col items-center justify-center p-10 max-w-sm">
 
-        
-          {/* <button
+          <div className="text-4xl mb-4"><SearchAlert size={110} strokeWidth={1.25} /></div>
+          <h2 className="font-display font-bold text-xl mb-2" style={{ color: "var(--tx)" }}>Poll Unavailable</h2>
+          <p className="font-body text-sm" style={{ color: "var(--tx-muted)" }}>{error}</p>
+
+          <button
             onClick={async () => {
               // Best-effort: fetch poll by code so we can get Mongo _id for analytics.
               try {
                 const r = await pollAPI.getByCode(code);
                 const p = r.data.data;
-                if (p._id) return nav(`/analytics/${p._id}`);
+                if (p?._id) {
+                  // Analytics route expects: /analytics/:pollId (uses poll _id)
+                  nav(`/analytics/${p._id}`);
+                  return;
+                }
               } catch (_) {
                 // ignore
               }
               toast.error("Analysis unavailable for this poll");
             }}
-
-            className="btn-primary w-full"
+            className="btn-primary w-full mt-4"
           >
-            View Analysis
-          </button> */}   
-  
-        
+            View Analytics →
+          </button>
+        </div>
       </div>
-    </div>
   );
 
   if (submitted) return (
