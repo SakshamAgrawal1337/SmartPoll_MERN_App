@@ -36,7 +36,7 @@ useEffect(() => {
 
   return (
       <header
-        className="fixed z-50 transition-all duration-500 ease-out border"
+        className="fixed z-50 transition-all duration-2500 ease-in-out will-change-transform "
         style={{
           top: scrolled ? 12 : 0,
           left: scrolled ? "50%" : 0,
@@ -45,12 +45,13 @@ useEffect(() => {
           width: scrolled ? "min(92%, 1100px)" : "100%",
           borderRadius: scrolled ? "999px" : "0px",
           background: "var(--nav)",
-          backdropFilter: "blur(20px)",
+          backdropFilter: "blur(40px)",
           WebkitBackdropFilter: "blur(20px)",
           borderColor: "var(--border)",
           boxShadow: scrolled
             ? "0 8px 30px rgba(0,0,0,0.12)"
             : "0 0 0 rgba(0,0,0,0)",
+            transition: "all 4000ms cubic-bezier(0.25, 1, 0.5, 1)",
         }}
       >
       <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
